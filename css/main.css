@@ -6,6 +6,14 @@ html, body{
 	background: #F50;
 }
 
+.header a.github{
+	font-size: 20px;
+	color: black;
+}
+.header a.github:hover{
+	text-decoration: none;
+}
+
 .footer{
 	font-size: 14px;
 	color: #AAA;
