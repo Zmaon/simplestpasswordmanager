@@ -18,3 +18,8 @@ html, body{
 	font-size: 14px;
 	color: #AAA;
 }
+
+.footer a{
+	color: #AAA;
+	text-decoration: underline;
+}
