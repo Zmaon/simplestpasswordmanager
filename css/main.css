@@ -1,0 +1,12 @@
+html, body{
+	height: 100%;
+}
+
+.header{
+	background: #F50;
+}
+
+.footer{
+	font-size: 14px;
+	color: #AAA;
+}

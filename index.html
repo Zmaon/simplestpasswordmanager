@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>The simplest password manager</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" media="screen"
+		href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="./css/fontawesome/css/all.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="./css/main.css">
+	<link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16.png">
+	<script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="./bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="./password_manager.js"></script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="container mb-5">
+			<img src="images/tspm_logo.svg" alt="TSPM Logo">
+		</div>
+	</div>
+	<div class="container d-flex justify-content-center">
+		<div class="row align-self-center d-flex flex-column">
+			<div class="container password-container">
+				<form>
+					<div class="form-group">
+						<label for="passphrase">Passphrase</label>
+						<div class="input-group">
+							<input type="password" class="form-control" id="passphrase"
+								placeholder="Type in your passphrase">
+							<div class="input-group-append">
+								<button class="btn btn-outline-primary" type="button"
+									id="button-show-passphrase">Show</button>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="password_output">Password</label>
+						<div class="input-group">
+							<input type="password" class="form-control" id="password-output" placeholder="Password"
+								readonly="readonly">
+							<div class="input-group-append">
+								<button class="btn btn-outline-primary" type="button"
+									id="button-show-output">Show</button>
+								<button class="btn btn-outline-primary" type="button" id="button-copy-output">Copy to
+									clipboard</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="card mt-5">
+				<div class="card-body">
+					<h3 class="card-title">How does it work?</h3>
+					<p class="card-text">
+						Think about a personal and easy to remember phrase that you can use for all your passwords.
+						For example (do NOT use these!):<br><br>
+
+						"My great password for <i>Github</i>"<br>
+						"My great password for <i>Google</i>"<br>
+						...<br><br>
+
+						Type this in the <strong>passphrase</strong> field above and voilà! Your password is generated.
+						The next time that you require one of your passwords, just type the same passphrase,
+						it will give you the same password.
+
+						<div class="alert alert-danger" role="alert">
+							<h4 class="alert-heading">Be unpredictable!</h4>
+							<p>
+								Try to figure out a passphrase that is not easy to guess! For example you can use
+								lowercase,
+								uppercase and special characters, slang or words you made up. <br>
+								Using another language than english is a good idea too!
+							</p>
+						</div>
+					</p>
+					<hr class="mt-4">
+					<h5 class="card-title mt-4">How is it better than just using my passphrase at Github or Google?</h5>
+					<p class="card-text">
+						If one of the services you are using get hacked (which happens regularly) and your password is
+						stolen,
+						it would be easy to guess your other passwords from your passphrase. Using "The simplest
+						password manager"
+						guarantees that it's impossible to guess anything from one of your passwords.
+					</p>
+
+					<hr class="mt-4">
+					<h5 class="card-title mt-4">Is my password stored anywhere?</h5>
+					<p class="card-text">
+						No. In fact, nothing is sent to the webserver, everything happens in the browser. This is really
+						easy for you to monitor using the developer console of your browser, and checking that no
+						network
+						connection happens when you type your passphrase.
+					</p>
+
+					<hr class="mt-4">
+					<h5 class="card-title mt-4">What if you get hacked?</h5>
+					<p class="card-text">
+						It's true that if a malicious hacker succeeded in hacking our server, he could change the script
+						to make it send the passphrases somewhere. <br>
+						To prevent that, we are regularly monitoring our server. We also encourage all the users of the
+						service
+						to check that no network connection happens when they type a passphrase. This is really easy to
+						see using
+						the developer console of your browser.
+					</p>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer mt-5 ">
+		<div class="container text-center">&copy; 2019 - The Simplest Password Manager - No privacy policy as we don't store anything</div>
+	</div>
+</body>
+
+<script>
+	$(function () {
+		$('.password-container').PasswordManager();
+	});
+</script>
+
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "most-simple-password-manager",
+  "authors": [
+    "Simon Chollet <simon@atipik.ch>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.3.1"
+  }
+}
