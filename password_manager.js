@@ -60,8 +60,8 @@
 
 			const digest = crypto.subtle.digest('SHA-256', data);
 			digest.then(digestValue => {
-				const byteArray = new Uint8Array(digestValue);
-				this.$output.val(this._smallify(byteArray));
+				const intArray = new Uint8Array(digestValue);
+				this.$output.val(this._smallify(intArray));
 			});
 		}
 
