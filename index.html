@@ -69,7 +69,7 @@
 				<div class="card-body">
 					<h3 class="card-title">How does it work?</h3>
 					<p class="card-text">
-						Think about a personal and easy to remember phrase that you can use for all your passwords.
+						Think about a personal and easy to remember sentence template that you can use for all your passwords.
 						For example (do NOT use these!):<br><br>
 
 						"My great password for <i>Github</i>"<br>
@@ -77,7 +77,7 @@
 						...<br><br>
 
 						Type this in the <strong>passphrase</strong> field above and voilà! Your password is generated.
-						The next time that you require one of your passwords, just type the same passphrase,
+						The next time that you require one of your passwords, just re-type the same passphrase,
 						it will give you the same password.
 
 						<div class="alert alert-info" role="alert">
@@ -89,12 +89,22 @@
 								Using another language than english is a good idea too!
 							</p>
 						</div>
+
+
+						<div class="alert alert-danger" role="alert">
+							<h4 class="alert-heading">Do not write your passphrase down!</h4>
+							<p>
+								If someone gets your passphrase, he could easily figure out all of your passwords.
+							</p>
+						</div>
 					</p>
 					<hr class="mt-4">
 					<h5 class="card-title mt-4">How is it better than just using my passphrase at Github or Google?</h5>
 					<p class="card-text">
-						If one of the services you are using get hacked (which happens regularly) and your password is
-						stolen,
+						If one of the services you are using gets hacked (which <a href="https://en.wikipedia.org/wiki/List_of_data_breaches"
+						target="_blank">happens regularly</a>) and your password is
+						stolen, or if <a href="https://www.wired.com/story/facebook-passwords-plaintext-change-yours/" target="_blank">
+						employees get access to your password</a>,
 						it would be easy to guess your other passwords from your passphrase. Using "The simplest
 						password manager"
 						guarantees that it's impossible to guess anything from one of your passwords.
@@ -121,6 +131,14 @@
 						the developer console of your browser.
 					</p>
 
+ 					<hr class="mt-4">
+					<h5 class="card-title mt-4">What if this website stops existing?</h5>
+					<p class="card-text">
+						The "recipe" that transforms your passphrase into a password is not a secret, and is quite simple.
+						You can see it by checking the <a href="https://github.com/Zmaon/simplestpasswordmanager" target="_blank">
+						github repository</a>.<br>
+						In fact, any geek could clone the repository and start a copy of this service in a few minutes.
+					</p>
 				</div>
 			</div>
 		</div>
