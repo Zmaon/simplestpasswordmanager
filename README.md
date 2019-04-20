@@ -1,6 +1,6 @@
 # The Simplest Password Manager
 
-This is the source code of https://www.simplestpasswordmanager.com/, a very simple "password manager" that generates passwords based on an easy to remember phrase like "My great password for Github". 
+This is the source code of https://www.thesimplepasswordmanager.com/, a very simple "password manager" that generates passwords based on an easy to remember phrase like "My great password for Github". 
 
 The idea is to keep the project as simple as possible, so no server side scripting, no npm, no js compilation, no babel, no webpack, just a few dependencies (bootstrap and jQuery) managed using Bower. 
 
