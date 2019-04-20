@@ -24,7 +24,7 @@
 		<div class="container mb-5">
 			<div class="row">
 				<div class="col-md-6">
-					<a href="/"><img src="images/tspm_logo.svg" alt="TSPM Logo"></a>
+					<a href="/"><img src="images/tspm_logo.svg" alt="The Simple Password Manager"></a>
 				</div>
 				<div class="col-md-6 text-right pt-2">
 					<a href="https://github.com/Zmaon/simplestpasswordmanager" target="_blank" class="github">
@@ -37,7 +37,7 @@
 	</div>
 	<div class="container d-flex justify-content-center">
 		<div class="row align-self-center d-flex flex-column">
-			<div class="container password-container">
+			<div class="container password-container mb-2">
 				<form>
 					<div class="form-group">
 						<label for="passphrase">Passphrase</label>
@@ -65,58 +65,75 @@
 					</div>
 				</form>
 			</div>
+			<div class="container mt-2">
+				<hr class="mb-4">
+				<p>
+					<b>Are you using the same password everywhere? Or do you just change it a little bit from
+					service to service?</b> Then <i>The Simple Password Manager</i> is made for you.
+				</p>
+				<p>
+					Using the same password on many services is really dangerous. It means that if one of your
+					accounts gets compromised, malicous people will be able to get access to all your other accounts. If you
+					think that security breaches are rare, or concern only small services, just have a look at
+					<a href="https://en.wikipedia.org/wiki/List_of_data_breaches" target="_blank">this list</a>.
+				</p>
+				<p>
+					Using the <i>The Simple Password Manager</i> you'll be able to generate strong passwords very easily,
+					without using a full featured password manager software.
+				</p>
+				<h3 class="mt-5">How does it work?</h3>
+				<p>
+					Think about a personal and easy to remember sentence that you can decline for all your passwords.
+					For example (do NOT use these!):<br><br>
+
+					"My great password for <i>Github</i>"<br>
+					"My great password for <i>Google</i>"<br>
+					...<br><br>
+
+					Type this in the <strong>passphrase</strong> field above and voilà! Your password is generated.
+					The next time that you require one of your passwords, just re-type the same passphrase,
+					it will give you the same password.
+
+					<div class="alert alert-info" role="alert">
+						<h4 class="alert-heading">Be unpredictable!</h4>
+						<p>
+							Try to figure out a passphrase that is not easy to guess! For example you can use
+							lowercase,
+							uppercase and special characters, slang or words you made up.
+							Using another language than english is a good idea too!
+						</p>
+					</div>
+
+
+					<div class="alert alert-danger" role="alert">
+						<h4 class="alert-heading">Do not write your passphrase down!</h4>
+						<p>
+							If someone gets your passphrase, he could easily figure out all of your passwords.
+						</p>
+					</div>
+				</p>
+
+			</div>
 			<div class="card mt-5">
 				<div class="card-body">
-					<h3 class="card-title">How does it work?</h3>
-					<p class="card-text">
-						Think about a personal and easy to remember sentence template that you can use for all your passwords.
-						For example (do NOT use these!):<br><br>
-
-						"My great password for <i>Github</i>"<br>
-						"My great password for <i>Google</i>"<br>
-						...<br><br>
-
-						Type this in the <strong>passphrase</strong> field above and voilà! Your password is generated.
-						The next time that you require one of your passwords, just re-type the same passphrase,
-						it will give you the same password.
-
-						<div class="alert alert-info" role="alert">
-							<h4 class="alert-heading">Be unpredictable!</h4>
-							<p>
-								Try to figure out a passphrase that is not easy to guess! For example you can use
-								lowercase,
-								uppercase and special characters, slang or words you made up. <br>
-								Using another language than english is a good idea too!
-							</p>
-						</div>
-
-
-						<div class="alert alert-danger" role="alert">
-							<h4 class="alert-heading">Do not write your passphrase down!</h4>
-							<p>
-								If someone gets your passphrase, he could easily figure out all of your passwords.
-							</p>
-						</div>
-					</p>
-					<hr class="mt-4">
+					<h1>FAQ</h1>
 					<h5 class="card-title mt-4">How is it better than just using my passphrase at Github or Google?</h5>
 					<p class="card-text">
 						If one of the services you are using gets hacked (which <a href="https://en.wikipedia.org/wiki/List_of_data_breaches"
 						target="_blank">happens regularly</a>) and your password is
 						stolen, or if <a href="https://www.wired.com/story/facebook-passwords-plaintext-change-yours/" target="_blank">
 						employees get access to your password</a>,
-						it would be easy to guess your other passwords from your passphrase. Using "The simple
-						password manager"
+						it would be easy to guess your other passwords from your passphrase. Using <i>The simple
+						password manager</i>
 						guarantees that it's impossible to guess anything from one of your passwords.
 					</p>
 
 					<hr class="mt-4">
 					<h5 class="card-title mt-4">Is my password stored anywhere?</h5>
 					<p class="card-text">
-						No. In fact, nothing is sent to the webserver, everything happens in the browser. This is really
+						No. In fact, nothing is sent to the web, everything happens locally in your browser. This is really
 						easy for you to monitor using the developer console of your browser, and checking that no
-						network
-						connection happens when you type your passphrase.
+						network connection happens when you type your passphrase.
 					</p>
 
 					<hr class="mt-4">
@@ -134,7 +151,7 @@
  					<hr class="mt-4">
 					<h5 class="card-title mt-4">What if this website stops existing?</h5>
 					<p class="card-text">
-						The "recipe" that transforms your passphrase into a password is not a secret, and is quite simple.
+						The "recipe" that transforms your passphrase into a password is not a secret, and is actually quite simple.
 						You can see it by checking the <a href="https://github.com/Zmaon/simplestpasswordmanager" target="_blank">
 						github repository</a>.<br>
 						In fact, any geek could clone the repository and start a copy of this service in a few minutes.
@@ -144,13 +161,25 @@
 		</div>
 	</div>
 	<div class="footer mt-5 mb-1">
-		<div class="container text-center">&copy; 2019 - The simple Password Manager - <a href="terms_and_conditions.html">Terms &amp; conditions</a> - No privacy policy as we don't store anything</div>
+		<div class="container text-center">
+			&copy; <span class='year'>2019</span> -
+			The simple Password Manager -
+			<a href="terms_and_conditions.html">Terms &amp; conditions</a> -
+			<a href="" class="contact">Contact</a>
+		</div>
 	</div>
 </body>
 
 <script>
 	$(function () {
 		$('.password-container').PasswordManager();
+		$('.contact').on('mousedown', function(){
+			var $a = $(this);
+			$a.attr('href', 'mailto:'+atob(atob('ZEdobGMybHRjR3hsWTI5dWRHRmpkR1Z0WVdsc1FIUm9aWE5wYlhCc1pYQmhjM04zYjNKa2JXRnVZV2RsY2k1amIyMD0=')));
+			setTimeout(function(){
+				$a.attr('href', '#');
+			}, 250);
+		});
 	});
 </script>
 
