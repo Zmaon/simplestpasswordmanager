@@ -75,32 +75,86 @@
 		}
 
 		_copyToClipboard(){
-			var copyOk = false;
 			if(!this.$output.val()){
 				return;
 			}
 
-			if(document.queryCommandSupported('copy')){
-				var initialType = this.$output.attr("type");
-				this.$output.attr("type", "text").select().select(); // 2 select() because Safari doesn't always understand the first time.
-
-				try {
-					document.execCommand('copy');
-					copyOk = true;
-					this.$copyOutput.width(this.$copyOutput.width()).html('<i class="fa fa-check"></i>');
-					clearTimeout(this.copyTimeout);
-					this.copyTimeout = setTimeout(() => {
-						this.$copyOutput.html('Copy to clipboard');
-					}, 1500);
-				} catch (err) {
-				}
-
-				this.$output.attr("type", initialType).blur();
+			if(!document.queryCommandSupported('copy')){
+				return false; // Todo: display a nice error to user.
 			}
+
+			let ua = window.navigator.userAgent;
+			let iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i) || !!ua.match(/iPod/i);
+			let webkit = !!ua.match(/WebKit/i);
+			let iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+
+			if(iOSSafari){
+				this._iOSCopyToClipboard();
+			} else {
+				this._stdCopyToClipboard();
+			}
+		}
+
+		/**
+		 * Works on most modern browsers.
+		 */
+		_stdCopyToClipboard(){
+			let initialType = this.$output.attr('type');
+			this.$output.attr('type', 'text').select().select(); // 2 select() because Safari doesn't always understand the first time.
+
+			let copyOk = this._doCopyToClipboard();
+
+			this.$output.attr('type', initialType).blur();
 
 			if(!copyOk){
-				window.prompt("Copy to clipboard is not supported on your browser, please copy manually:", this.$output.val());
+				window.prompt('Copy to clipboard is not supported on your browser, please copy manually:', this.$output.val());
 			}
+		}
+
+		/**
+		 * Works on Safari iOS
+		 * Thanks to https://stackoverflow.com/questions/34045777/copy-to-clipboard-using-javascript-in-ios
+		 */
+		_iOSCopyToClipboard(){
+			let el = this.$output.get(0);
+			let initialType = this.$output.attr("type");
+			let range = document.createRange();
+
+			this.$output
+				.attr('type', 'text')
+				.prop('contenteditable', true)
+				.prop('readonly', false);
+
+			range.selectNodeContents(el);
+
+			var selection = window.getSelection();
+			selection.removeAllRanges();
+			selection.addRange(range);
+
+			el.setSelectionRange(0, 255); // A big number, to cover anything that could be inside the element.
+
+			this._doCopyToClipboard();
+
+			this.$output
+				.attr('type', initialType)
+				.prop('contenteditable', false)
+				.prop('readonly', true)
+				.blur();
+		}
+
+		_doCopyToClipboard(){
+			try {
+				document.execCommand('copy');
+				this.$copyOutput.width(this.$copyOutput.width()).html('<i class="fa fa-check"></i>');
+				clearTimeout(this.copyTimeout);
+				this.copyTimeout = setTimeout(() => {
+					this.$copyOutput.html('Copy to clipboard');
+				}, 1500);
+				return true;
+			} catch (err) {
+				console.error(err);
+			}
+			return false;
 		}
 	}
 

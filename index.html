@@ -38,12 +38,11 @@
 	<div class="container d-flex justify-content-center">
 		<div class="row align-self-center d-flex flex-column">
 			<div class="container password-container mb-2">
-				<form>
+				<form autocomplete="off">
 					<div class="form-group">
 						<label for="passphrase">Passphrase</label>
 						<div class="input-group">
-							<input type="password" class="form-control" id="passphrase"
-								placeholder="Type in your passphrase">
+							<input type="password" class="form-control" id="passphrase" autocomplete="off" placeholder="Type in your passphrase">
 							<div class="input-group-append">
 								<button class="btn btn-outline-primary" type="button"
 									id="button-show-passphrase">Show</button>
@@ -53,8 +52,7 @@
 					<div class="form-group">
 						<label for="password_output">Password</label>
 						<div class="input-group">
-							<input type="password" class="form-control" id="password-output" placeholder="Password"
-								readonly="readonly">
+							<input type="password" class="form-control" id="password-output" placeholder="Password" autocomplete="off" readonly="readonly">
 							<div class="input-group-append">
 								<button class="btn btn-outline-primary" type="button"
 									id="button-show-output">Show</button>
