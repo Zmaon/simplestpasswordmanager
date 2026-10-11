@@ -75,86 +75,66 @@
 		}
 
 		_copyToClipboard(){
-			if(!this.$output.val()){
+			const text = this.$output.val();
+			if(!text){
 				return;
 			}
 
-			if(!document.queryCommandSupported('copy')){
-				return false; // Todo: display a nice error to user.
+			// Clipboard API: works on all modern browsers (incl. Safari iOS 13.4+), requires HTTPS.
+			// Must be called synchronously from the click handler for Safari to accept it.
+			if(navigator.clipboard && window.isSecureContext){
+				navigator.clipboard.writeText(text)
+					.then(() => this._showCopySuccess())
+					.catch(err => {
+						console.error(err);
+						this._legacyCopyToClipboard(text);
+					});
+				return;
 			}
 
-			let ua = window.navigator.userAgent;
-			let iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i) || !!ua.match(/iPod/i);
-			let webkit = !!ua.match(/WebKit/i);
-			let iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
-
-			if(iOSSafari){
-				this._iOSCopyToClipboard();
-			} else {
-				this._stdCopyToClipboard();
-			}
+			this._legacyCopyToClipboard(text);
 		}
 
 		/**
-		 * Works on most modern browsers.
+		 * Fallback for older browsers, using a temporary textarea and execCommand('copy').
 		 */
-		_stdCopyToClipboard(){
-			let initialType = this.$output.attr('type');
-			this.$output.attr('type', 'text').select().select(); // 2 select() because Safari doesn't always understand the first time.
+		_legacyCopyToClipboard(text){
+			const textarea = document.createElement('textarea');
+			textarea.value = text;
+			textarea.setAttribute('readonly', '');
+			textarea.style.position = 'fixed';
+			textarea.style.top = '0';
+			textarea.style.left = '0';
+			textarea.style.opacity = '0';
+			textarea.style.fontSize = '16px'; // Prevents zoom on iOS.
+			document.body.appendChild(textarea);
 
-			let copyOk = this._doCopyToClipboard();
+			textarea.select();
+			textarea.setSelectionRange(0, text.length); // Needed on iOS.
 
-			this.$output.attr('type', initialType).blur();
-
-			if(!copyOk){
-				window.prompt('Copy to clipboard is not supported on your browser, please copy manually:', this.$output.val());
-			}
-		}
-
-		/**
-		 * Works on Safari iOS
-		 * Thanks to https://stackoverflow.com/questions/34045777/copy-to-clipboard-using-javascript-in-ios
-		 */
-		_iOSCopyToClipboard(){
-			let el = this.$output.get(0);
-			let initialType = this.$output.attr("type");
-			let range = document.createRange();
-
-			this.$output
-				.attr('type', 'text')
-				.prop('contenteditable', true)
-				.prop('readonly', false);
-
-			range.selectNodeContents(el);
-
-			var selection = window.getSelection();
-			selection.removeAllRanges();
-			selection.addRange(range);
-
-			el.setSelectionRange(0, 255); // A big number, to cover anything that could be inside the element.
-
-			this._doCopyToClipboard();
-
-			this.$output
-				.attr('type', initialType)
-				.prop('contenteditable', false)
-				.prop('readonly', true)
-				.blur();
-		}
-
-		_doCopyToClipboard(){
+			let copyOk = false;
 			try {
-				document.execCommand('copy');
-				this.$copyOutput.width(this.$copyOutput.width()).html('<i class="fa fa-check"></i>');
-				clearTimeout(this.copyTimeout);
-				this.copyTimeout = setTimeout(() => {
-					this.$copyOutput.html('Copy to clipboard');
-				}, 1500);
-				return true;
+				copyOk = document.execCommand('copy');
 			} catch (err) {
 				console.error(err);
 			}
-			return false;
+
+			document.body.removeChild(textarea);
+			this.$copyOutput.blur();
+
+			if(copyOk){
+				this._showCopySuccess();
+			} else {
+				window.prompt('Copy to clipboard is not supported on your browser, please copy manually:', text);
+			}
+		}
+
+		_showCopySuccess(){
+			this.$copyOutput.width(this.$copyOutput.width()).html('<i class="fa fa-check"></i>');
+			clearTimeout(this.copyTimeout);
+			this.copyTimeout = setTimeout(() => {
+				this.$copyOutput.html('Copy to clipboard');
+			}, 1500);
 		}
 	}
 
