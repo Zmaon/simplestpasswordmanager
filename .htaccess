@@ -3,8 +3,8 @@ RewriteEngine On
 RewriteCond %{REQUEST_URI} ^/.well-known/
 RewriteRule .* - [L]
 
-# RewriteCond %{HTTP_HOST} ^www\.thesimplepasswordmanager\.com
-# RewriteRule ^(.*)$ https://www.tsmp.ch/$1 [R=301,L]
+RewriteCond %{HTTP_HOST} !^www\.tspm\.ch
+RewriteRule ^(.*)$ https://www.tspm.ch/$1 [R=301,L]
 
 RewriteCond %{HTTP_HOST} !^www\.
 RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
