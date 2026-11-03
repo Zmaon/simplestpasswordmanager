@@ -14,8 +14,6 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="./css/main.css">
 	<link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16.png">
-	<script src="./bower_components/jquery/dist/jquery.min.js"></script>
-	<script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="./password_manager.js"></script>
 </head>
 
@@ -38,9 +36,26 @@
 	<div class="container d-flex justify-content-center">
 		<div class="row align-self-center d-flex flex-column">
 			<div class="container password-container mb-2">
+				<div class="d-flex flex-wrap align-items-center mb-1">
+					<span class="mr-2">Version</span>
+					<div class="btn-group btn-group-sm" role="group" aria-label="Password version">
+						<button type="button" class="btn btn-outline-primary" data-version="v2" aria-pressed="false">v2 (recommended)</button>
+						<button type="button" class="btn btn-outline-primary" data-version="v1" aria-pressed="false">v1 (deprecated)</button>
+					</div>
+				</div>
+				<p class="small text-muted mb-3">Made your passwords before v2 existed? Switch to v1 to get them back.</p>
+				<div class="alert alert-warning v1-warning" role="alert" hidden>
+					<h5 class="alert-heading">v1 is deprecated, please move to v2</h5>
+					<p class="mb-0">
+						v1 turns your passphrase into a password with a single fast hash. If one website leaks your
+						password, an attacker can try billions of guesses per second to find your passphrase, and from
+						it guess all your other passwords.
+						Use v1 only to log in, then change that password to one generated with v2.
+					</p>
+				</div>
 				<form autocomplete="off">
 					<div class="form-group">
-						<label for="passphrase">Passphrase</label>
+						<label for="passphrase">Master passphrase</label>
 						<div class="input-group">
 							<input type="password" class="form-control" id="passphrase" autocomplete="off" placeholder="Type in your passphrase">
 							<div class="input-group-append">
@@ -49,8 +64,13 @@
 							</div>
 						</div>
 					</div>
+					<div class="form-group site-group">
+						<label for="site">Website</label>
+						<input type="text" class="form-control" id="site" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. github">
+						<small class="form-text text-muted">Type it the same way every time. Upper/lower case and surrounding spaces don't matter.</small>
+					</div>
 					<div class="form-group">
-						<label for="password_output">Password</label>
+						<label for="password-output">Password</label>
 						<div class="input-group">
 							<input type="password" class="form-control" id="password-output" placeholder="Password" autocomplete="off" readonly="readonly">
 							<div class="input-group-append">
@@ -81,15 +101,12 @@
 				</p>
 				<h3 class="mt-5">How does it work?</h3>
 				<p>
-					Think about a personal and easy to remember sentence that you can decline for all your passwords.
-					For example (do NOT use these!):<br><br>
+					Think about a personal and easy to remember <strong>master passphrase</strong>, for example
+					(do NOT use this one!): "My cat eats pizza on Tuesdays".<br><br>
 
-					"My great password for <i>Github</i>"<br>
-					"My great password for <i>Google</i>"<br>
-					...<br><br>
-
-					Type this in the <strong>passphrase</strong> field above and voilà! Your password is generated.
-					The next time that you require one of your passwords, just re-type the same passphrase,
+					Type it in the <strong>master passphrase</strong> field above, type the name of the website in the
+					<strong>website</strong> field (for example <i>github</i>) and voilà! Your password is generated.
+					The next time that you require this password, just re-type the same passphrase and website,
 					it will give you the same password.
 
 					<div class="alert alert-info" role="alert">
@@ -121,9 +138,21 @@
 						target="_blank">happens regularly</a>) and your password is
 						stolen, or if <a href="https://www.wired.com/story/facebook-passwords-plaintext-change-yours/" target="_blank">
 						employees get access to your password</a>,
-						it would be easy to guess your other passwords from your passphrase. Using <i>The simple
-						password manager</i>
-						guarantees that it's impossible to guess anything from one of your passwords.
+						they would directly know the password you use everywhere else.
+						With <i>The simple password manager</i>, each website gets a different password, and the only way to
+						go back from one of them to your passphrase is to guess it. Version 2 makes every single guess
+						deliberately slow (600,000 rounds of PBKDF2), so a passphrase that is hard to guess stays out of reach.
+					</p>
+
+					<hr class="mt-4">
+					<h5 class="card-title mt-4">What's the difference between v1 and v2?</h5>
+					<p class="card-text">
+						v1 generated passwords with a single SHA-256 hash, which is very fast to compute: someone who got
+						one of your v1 passwords could try billions of passphrases per second until they found yours.
+						v2 uses a slow key derivation function (PBKDF2), uses the website as a separate input, and always
+						includes a lowercase letter, an uppercase letter, a digit and a symbol.<br>
+						v1 and v2 give different passwords for the same passphrase. v1 is still available so that you can
+						log in with your old passwords and change them to v2 ones.
 					</p>
 
 					<hr class="mt-4">
@@ -132,6 +161,7 @@
 						No. In fact, nothing is sent to the web, everything happens locally in your browser. This is really
 						easy for you to monitor using the developer console of your browser, and checking that no
 						network connection happens when you type your passphrase.
+						The only thing your browser remembers is whether you chose v1 or v2.
 					</p>
 
 					<hr class="mt-4">
@@ -146,7 +176,7 @@
 						the developer console of your browser.
 					</p>
 
- 					<hr class="mt-4">
+					<hr class="mt-4">
 					<h5 class="card-title mt-4">What if this website stops existing?</h5>
 					<p class="card-text">
 						The "recipe" that transforms your passphrase into a password is not a secret, and is actually quite simple.
@@ -167,18 +197,5 @@
 		</div>
 	</div>
 </body>
-
-<script>
-	$(function () {
-		$('.password-container').PasswordManager();
-		$('.contact').on('mousedown', function(){
-			var $a = $(this);
-			$a.attr('href', 'mailto:'+atob(atob('ZEdobGMybHRjR3hsWTI5dWRHRmpkR1Z0WVdsc1FIUm9aWE5wYlhCc1pYQmhjM04zYjNKa2JXRnVZV2RsY2k1amIyMD0=')));
-			setTimeout(function(){
-				$a.attr('href', '#');
-			}, 250);
-		});
-	});
-</script>
 
 </html>
