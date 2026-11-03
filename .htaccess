@@ -17,7 +17,7 @@ RewriteRule (.*) https://%{SERVER_NAME}/$1 [R=301,L]
 	Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 	# Only our own files may load, and the page may not open any network connection
 	# (connect-src 'none'), so an injected script can't send passphrases anywhere.
-	Header always set Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; frame-ancestors 'none'"
+	Header always set Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; frame-ancestors 'none'"
 	Header always set X-Content-Type-Options "nosniff"
 	Header always set Referrer-Policy "no-referrer"
 </IfModule>

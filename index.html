@@ -1,201 +1,193 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>The simple password manager</title>
 	<meta name="keywords" content="simple password manager, simple password manager, password manager, password generator">
 	<meta name="description" content="A simple password manager that generates passwords based on a phrase easy to remember.">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" media="screen"
-		href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" media="screen" href="./css/fontawesome/css/all.css">
-	<link rel="stylesheet" type="text/css" media="screen" href="./css/main.css">
+	<link rel="stylesheet" href="./css/main.css">
 	<link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16.png">
 	<script src="./password_manager.js"></script>
 </head>
 
 <body>
-	<div class="header">
-		<div class="container mb-5">
-			<div class="row">
-				<div class="col-md-6">
-					<a href="/"><img src="images/tspm_logo.svg" alt="The Simple Password Manager"></a>
-				</div>
-				<div class="col-md-6 text-right pt-2">
-					<a href="https://github.com/Zmaon/simplestpasswordmanager" target="_blank" class="github">
-						<i class="fab fa-github"></i> Github
-					</a>
-				</div>
-
+	<header class="header">
+		<div class="wrap">
+			<a href="/"><img src="images/tspm_logo.svg" width="250" height="59" alt="The Simple Password Manager"></a>
+			<div class="header-links">
+				<button type="button" class="theme-toggle"></button>
+				<a href="https://github.com/Zmaon/simplestpasswordmanager" target="_blank" class="github">
+					<!-- GitHub icon from Font Awesome Free, CC BY 4.0 -->
+					<svg class="icon" viewBox="0 0 496 512" aria-hidden="true"><path transform="matrix(1 0 0 -1 0 448)" d="M165.9 50.5996c0 -2 -2.30078 -3.59961 -5.2002 -3.59961c-3.2998 -0.299805 -5.60059 1.2998 -5.60059 3.59961c0 2 2.30078 3.60059 5.2002 3.60059c3 0.299805 5.60059 -1.2998 5.60059 -3.60059zM134.8 55.0996c0.700195 2 3.60059 3 6.2002 2.30078 c3 -0.900391 4.90039 -3.2002 4.2998 -5.2002c-0.599609 -2 -3.59961 -3 -6.2002 -2c-3 0.599609 -5 2.89941 -4.2998 4.89941zM179 56.7998c2.90039 0.299805 5.59961 -1 5.90039 -2.89941c0.299805 -2 -1.7002 -3.90039 -4.60059 -4.60059 c-3 -0.700195 -5.59961 0.600586 -5.89941 2.60059c-0.300781 2.2998 1.69922 4.19922 4.59961 4.89941zM244.8 440c138.7 0 251.2 -105.3 251.2 -244c0 -110.9 -67.7998 -205.8 -167.8 -239c-12.7002 -2.2998 -17.2998 5.59961 -17.2998 12.0996 c0 8.2002 0.299805 49.9004 0.299805 83.6006c0 23.5 -7.7998 38.5 -17 46.3994c55.8994 6.30078 114.8 14 114.8 110.5c0 27.4004 -9.7998 41.2002 -25.7998 58.9004c2.59961 6.5 11.0996 33.2002 -2.60059 67.9004c-20.8994 6.59961 -69 -27 -69 -27 c-20 5.59961 -41.5 8.5 -62.7998 8.5s-42.7998 -2.90039 -62.7998 -8.5c0 0 -48.0996 33.5 -69 27c-13.7002 -34.6006 -5.2002 -61.4004 -2.59961 -67.9004c-16 -17.5996 -23.6006 -31.4004 -23.6006 -58.9004c0 -96.1992 56.4004 -104.3 112.3 -110.5 c-7.19922 -6.59961 -13.6992 -17.6992 -16 -33.6992c-14.2998 -6.60059 -51 -17.7002 -72.8994 20.8994c-13.7002 23.7998 -38.6006 25.7998 -38.6006 25.7998c-24.5 0.300781 -1.59961 -15.3994 -1.59961 -15.3994c16.4004 -7.5 27.7998 -36.6006 27.7998 -36.6006 c14.7002 -44.7998 84.7002 -29.7998 84.7002 -29.7998c0 -21 0.299805 -55.2002 0.299805 -61.3994c0 -6.5 -4.5 -14.4004 -17.2998 -12.1006c-99.7002 33.4004 -169.5 128.3 -169.5 239.2c0 138.7 106.1 244 244.8 244zM97.2002 95.0996 c1.2998 1.30078 3.59961 0.600586 5.2002 -1c1.69922 -1.89941 2 -4.19922 0.699219 -5.19922c-1.2998 -1.30078 -3.59961 -0.600586 -5.19922 1c-1.7002 1.89941 -2 4.19922 -0.700195 5.19922zM86.4004 103.2c0.699219 1 2.2998 1.2998 4.2998 0.700195 c2 -1 3 -2.60059 2.2998 -3.90039c-0.700195 -1.40039 -2.7002 -1.7002 -4.2998 -0.700195c-2 1 -3 2.60059 -2.2998 3.90039zM118.8 67.5996c1.2998 1.60059 4.2998 1.30078 6.5 -1c2 -1.89941 2.60059 -4.89941 1.2998 -6.19922 c-1.2998 -1.60059 -4.19922 -1.30078 -6.5 1c-2.2998 1.89941 -2.89941 4.89941 -1.2998 6.19922zM107.4 82.2998c1.59961 1.2998 4.19922 0.299805 5.59961 -2c1.59961 -2.2998 1.59961 -4.89941 0 -6.2002c-1.2998 -1 -4 0 -5.59961 2.30078 c-1.60059 2.2998 -1.60059 4.89941 0 5.89941z"/></svg>
+					Github
+				</a>
 			</div>
 		</div>
-	</div>
-	<div class="container d-flex justify-content-center">
-		<div class="row align-self-center d-flex flex-column">
-			<div class="container password-container mb-2">
-				<div class="d-flex flex-wrap align-items-center mb-1">
-					<span class="mr-2">Version</span>
-					<div class="btn-group btn-group-sm" role="group" aria-label="Password version">
-						<button type="button" class="btn btn-outline-primary" data-version="v2" aria-pressed="false">v2 (recommended)</button>
-						<button type="button" class="btn btn-outline-primary" data-version="v1" aria-pressed="false">v1 (deprecated)</button>
-					</div>
-				</div>
-				<p class="small text-muted mb-3">Made your passwords before v2 existed? Switch to v1 to get them back.</p>
-				<div class="alert alert-warning v1-warning" role="alert" hidden>
-					<h5 class="alert-heading">v1 is deprecated, please move to v2</h5>
-					<p class="mb-0">
-						v1 turns your passphrase into a password with a single fast hash. If one website leaks your
-						password, an attacker can try billions of guesses per second to find your passphrase, and from
-						it guess all your other passwords.
-						Use v1 only to log in, then change that password to one generated with v2.
-					</p>
-				</div>
-				<form autocomplete="off">
-					<div class="form-group">
-						<label for="passphrase">Master passphrase</label>
-						<div class="input-group">
-							<input type="password" class="form-control" id="passphrase" autocomplete="off" placeholder="Type in your passphrase">
-							<div class="input-group-append">
-								<button class="btn btn-outline-primary" type="button"
-									id="button-show-passphrase">Show</button>
-							</div>
-						</div>
-					</div>
-					<div class="form-group site-group">
-						<label for="site">Website</label>
-						<input type="text" class="form-control" id="site" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. github">
-						<small class="form-text text-muted">Type it the same way every time. Upper/lower case and surrounding spaces don't matter.</small>
-					</div>
-					<div class="form-group">
-						<label for="password-output">Password</label>
-						<div class="input-group">
-							<input type="password" class="form-control" id="password-output" placeholder="Password" autocomplete="off" readonly="readonly">
-							<div class="input-group-append">
-								<button class="btn btn-outline-primary" type="button"
-									id="button-show-output">Show</button>
-								<button class="btn btn-outline-primary" type="button" id="button-copy-output">Copy to
-									clipboard</button>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="container mt-2">
-				<hr class="mb-4">
-				<p>
-					<b>Are you using the same password everywhere? Or do you just change it a little bit from
-					service to service?</b> Then <i>The Simple Password Manager</i> is made for you.
-				</p>
-				<p>
-					Using the same password on many services is really dangerous. It means that if one of your
-					accounts gets compromised, malicous people will be able to get access to all your other accounts. If you
-					think that security breaches are rare, or concern only small services, just have a look at
-					<a href="https://en.wikipedia.org/wiki/List_of_data_breaches" target="_blank">this list</a>.
-				</p>
-				<p>
-					Using the <i>The Simple Password Manager</i> you'll be able to generate strong passwords very easily,
-					without using a full featured password manager software.
-				</p>
-				<h3 class="mt-5">How does it work?</h3>
-				<p>
-					Think about a personal and easy to remember <strong>master passphrase</strong>, for example
-					(do NOT use this one!): "My cat eats pizza on Tuesdays".<br><br>
+	</header>
 
-					Type it in the <strong>master passphrase</strong> field above, type the name of the website in the
-					<strong>website</strong> field (for example <i>github</i>) and voilà! Your password is generated.
-					The next time that you require this password, just re-type the same passphrase and website,
-					it will give you the same password.
-
-					<div class="alert alert-info" role="alert">
-						<h4 class="alert-heading">Be unpredictable!</h4>
-						<p>
-							Try to figure out a passphrase that is not easy to guess! For example you can use
-							lowercase,
-							uppercase and special characters, slang or words you made up.
-							Using another language than english is a good idea too!
-						</p>
-					</div>
-
-
-					<div class="alert alert-danger" role="alert">
-						<h4 class="alert-heading">Do not write your passphrase down!</h4>
-						<p>
-							If someone gets your passphrase, he could easily figure out all of your passwords.
-						</p>
-					</div>
-				</p>
-
-			</div>
-			<div class="card mt-5">
-				<div class="card-body">
-					<h1>FAQ</h1>
-					<h5 class="card-title mt-4">How is it better than just using my passphrase at Github or Google?</h5>
-					<p class="card-text">
-						If one of the services you are using gets hacked (which <a href="https://en.wikipedia.org/wiki/List_of_data_breaches"
-						target="_blank">happens regularly</a>) and your password is
-						stolen, or if <a href="https://www.wired.com/story/facebook-passwords-plaintext-change-yours/" target="_blank">
-						employees get access to your password</a>,
-						they would directly know the password you use everywhere else.
-						With <i>The simple password manager</i>, each website gets a different password, and the only way to
-						go back from one of them to your passphrase is to guess it. Version 2 makes every single guess
-						deliberately slow (600,000 rounds of PBKDF2), so a passphrase that is hard to guess stays out of reach.
-					</p>
-
-					<hr class="mt-4">
-					<h5 class="card-title mt-4">What's the difference between v1 and v2?</h5>
-					<p class="card-text">
-						v1 generated passwords with a single SHA-256 hash, which is very fast to compute: someone who got
-						one of your v1 passwords could try billions of passphrases per second until they found yours.
-						v2 uses a slow key derivation function (PBKDF2), uses the website as a separate input, and always
-						includes a lowercase letter, an uppercase letter, a digit and a symbol.<br>
-						v1 and v2 give different passwords for the same passphrase. v1 is still available so that you can
-						log in with your old passwords and change them to v2 ones.
-					</p>
-
-					<hr class="mt-4">
-					<h5 class="card-title mt-4">Is my password stored anywhere?</h5>
-					<p class="card-text">
-						No. In fact, nothing is sent to the web, everything happens locally in your browser. This is really
-						easy for you to monitor using the developer console of your browser, and checking that no
-						network connection happens when you type your passphrase.
-						The only thing your browser remembers is whether you chose v1 or v2.
-					</p>
-
-					<hr class="mt-4">
-					<h5 class="card-title mt-4">What if you get hacked?</h5>
-					<p class="card-text">
-						It's true that if a malicious hacker succeeded in hacking our server, he could change the script
-						to make it send the passphrases somewhere. <br>
-						To prevent that, we are regularly monitoring our server. We also encourage all the users of the
-						service
-						to check that no network connection happens when they type a passphrase. This is really easy to
-						see using
-						the developer console of your browser.
-					</p>
-
-					<hr class="mt-4">
-					<h5 class="card-title mt-4">What if this website stops existing?</h5>
-					<p class="card-text">
-						The "recipe" that transforms your passphrase into a password is not a secret, and is actually quite simple.
-						You can see it by checking the <a href="https://github.com/Zmaon/simplestpasswordmanager" target="_blank">
-						github repository</a>.<br>
-						In fact, any geek could clone the repository and start a copy of this service in a few minutes.
-					</p>
+	<main class="wrap">
+		<section class="panel password-container">
+			<div class="version">
+				<span class="version-label">Version</span>
+				<div class="segmented" role="group" aria-label="Password version">
+					<button type="button" data-version="v2" aria-pressed="false">v2 (recommended)</button>
+					<button type="button" data-version="v1" aria-pressed="false">v1 (deprecated)</button>
 				</div>
 			</div>
-		</div>
-	</div>
-	<div class="footer mt-5 mb-1">
-		<div class="container text-center">
+			<p class="hint">Made your passwords before v2 existed? Switch to v1 to get them back.</p>
+			<div class="notice notice-warning v1-warning" role="alert" hidden>
+				<h3>v1 is deprecated, please move to v2</h3>
+				<p>
+					v1 turns your passphrase into a password with a single fast hash. If one website leaks your
+					password, an attacker can try billions of guesses per second to find your passphrase, and from
+					it guess all your other passwords.
+					Use v1 only to log in, then change that password to one generated with v2.
+				</p>
+			</div>
+			<form autocomplete="off">
+				<div class="field">
+					<label for="passphrase">Master passphrase</label>
+					<div class="input-group">
+						<input type="password" class="input" id="passphrase" autocomplete="off" placeholder="Type in your passphrase">
+						<button class="btn" type="button" id="button-show-passphrase">Show</button>
+					</div>
+				</div>
+				<div class="field site-group">
+					<label for="site">Website</label>
+					<input type="text" class="input" id="site" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. github">
+					<small class="field-help">Type it the same way every time. Upper/lower case and surrounding spaces don't matter.</small>
+				</div>
+				<div class="field">
+					<label for="password-output">Password</label>
+					<div class="input-group output-group">
+						<input type="password" class="input input-password" id="password-output" placeholder="Password" autocomplete="off" readonly="readonly">
+						<button class="btn" type="button" id="button-show-output">Show</button>
+						<button class="btn btn-primary" type="button" id="button-copy-output">Copy</button>
+					</div>
+				</div>
+			</form>
+		</section>
+
+		<section class="content">
+			<p class="lead">
+				<b>Are you using the same password everywhere? Or do you just change it a little bit from
+				service to service?</b> Then <i>The Simple Password Manager</i> is made for you.
+			</p>
+			<p>
+				Using the same password on many services is really dangerous. It means that if one of your
+				accounts gets compromised, malicous people will be able to get access to all your other accounts. If you
+				think that security breaches are rare, or concern only small services, just have a look at
+				<a href="https://en.wikipedia.org/wiki/List_of_data_breaches" target="_blank">this list</a>.
+			</p>
+			<p>
+				Using the <i>The Simple Password Manager</i> you'll be able to generate strong passwords very easily,
+				without using a full featured password manager software.
+			</p>
+
+			<h2>How does it work?</h2>
+			<p>
+				Think about a personal and easy to remember <strong>master passphrase</strong>, for example
+				(do NOT use this one!): "My cat eats pizza on Tuesdays".
+			</p>
+			<p>
+				Type it in the <strong>master passphrase</strong> field above, type the name of the website in the
+				<strong>website</strong> field (for example <i>github</i>) and voilà! Your password is generated.
+				The next time that you require this password, just re-type the same passphrase and website,
+				it will give you the same password.
+			</p>
+
+			<div class="notice notice-info">
+				<h3>Be unpredictable!</h3>
+				<p>
+					Try to figure out a passphrase that is not easy to guess! For example you can use
+					lowercase,
+					uppercase and special characters, slang or words you made up.
+					Using another language than english is a good idea too!
+				</p>
+			</div>
+
+			<div class="notice notice-danger">
+				<h3>Do not write your passphrase down!</h3>
+				<p>
+					If someone gets your passphrase, he could easily figure out all of your passwords.
+				</p>
+			</div>
+		</section>
+
+		<section class="faq">
+			<h2>FAQ</h2>
+			<div class="faq-item">
+				<h3>How is it better than just using my passphrase at Github or Google?</h3>
+				<p>
+					If one of the services you are using gets hacked (which <a href="https://en.wikipedia.org/wiki/List_of_data_breaches"
+					target="_blank">happens regularly</a>) and your password is
+					stolen, or if <a href="https://www.wired.com/story/facebook-passwords-plaintext-change-yours/" target="_blank">
+					employees get access to your password</a>,
+					they would directly know the password you use everywhere else.
+					With <i>The simple password manager</i>, each website gets a different password, and the only way to
+					go back from one of them to your passphrase is to guess it. Version 2 makes every single guess
+					deliberately slow (600,000 rounds of PBKDF2), so a passphrase that is hard to guess stays out of reach.
+				</p>
+			</div>
+
+			<div class="faq-item">
+				<h3>What's the difference between v1 and v2?</h3>
+				<p>
+					v1 generated passwords with a single SHA-256 hash, which is very fast to compute: someone who got
+					one of your v1 passwords could try billions of passphrases per second until they found yours.
+					v2 uses a slow key derivation function (PBKDF2), uses the website as a separate input, and always
+					includes a lowercase letter, an uppercase letter, a digit and a symbol.<br>
+					v1 and v2 give different passwords for the same passphrase. v1 is still available so that you can
+					log in with your old passwords and change them to v2 ones.
+				</p>
+			</div>
+
+			<div class="faq-item">
+				<h3>Is my password stored anywhere?</h3>
+				<p>
+					No. In fact, nothing is sent to the web, everything happens locally in your browser. This is really
+					easy for you to monitor using the developer console of your browser, and checking that no
+					network connection happens when you type your passphrase.
+					The only things your browser remembers are whether you chose v1 or v2, and light or dark theme.
+				</p>
+			</div>
+
+			<div class="faq-item">
+				<h3>What if you get hacked?</h3>
+				<p>
+					It's true that if a malicious hacker succeeded in hacking our server, he could change the script
+					to make it send the passphrases somewhere. <br>
+					To prevent that, we are regularly monitoring our server. We also encourage all the users of the
+					service
+					to check that no network connection happens when they type a passphrase. This is really easy to
+					see using
+					the developer console of your browser.
+				</p>
+			</div>
+
+			<div class="faq-item">
+				<h3>What if this website stops existing?</h3>
+				<p>
+					The "recipe" that transforms your passphrase into a password is not a secret, and is actually quite simple.
+					You can see it by checking the <a href="https://github.com/Zmaon/simplestpasswordmanager" target="_blank">
+					github repository</a>.<br>
+					In fact, any geek could clone the repository and start a copy of this service in a few minutes.
+				</p>
+			</div>
+		</section>
+	</main>
+
+	<footer class="footer">
+		<div class="wrap">
 			&copy; <span class='year'>2019</span> -
 			The simple Password Manager -
 			<a href="terms_and_conditions.html">Terms &amp; conditions</a> -
 			<a href="" class="contact">Contact</a>
 		</div>
-	</div>
+	</footer>
 </body>
 
 </html>

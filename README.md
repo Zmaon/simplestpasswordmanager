@@ -2,17 +2,11 @@
 
 This is the source code of https://www.tspm.ch, a very simple "password manager" that generates passwords from an easy to remember master passphrase and the name of the website.
 
-The idea is to keep the project as simple as possible, so no server side scripting, no npm, no js compilation, no babel, no webpack, no JavaScript library: the only script on the page is `password_manager.js`. Bootstrap is used for its CSS only, managed using Bower.
+The idea is to keep the project as simple as possible, so no server side scripting, no npm, no js compilation, no babel, no webpack, and no dependencies at all: the page is `index.html`, `password_manager.js` and `css/main.css`, nothing else.
 
 ## Installing
 
-Clone the repo, go in the project's directory and install the dependencies:
-
-    bower install
-
-If you don't have Bower installed on your system, please check their website to see how to install it: https://bower.io
-
-Once it's done, just double-click on `index.html` to open it with your favorite browser, that's it!
+Clone the repo and double-click on `index.html` to open it with your favorite browser, that's it!
 
 When hosted, `.htaccess` adds a Content Security Policy that only allows the site's own files and forbids any network connection from the page, plus HSTS. It needs Apache's `mod_headers`.
 

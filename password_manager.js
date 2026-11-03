@@ -2,6 +2,7 @@
 	'use strict';
 
 	const STORAGE_KEY = 'tspm.version';
+	const THEME_STORAGE_KEY = 'tspm.theme';
 
 	const V1_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#';
 
@@ -15,6 +16,11 @@
 		'0123456789',
 		'!#$%&*+-=?@_'
 	];
+
+	// Icons from Font Awesome Free, CC BY 4.0.
+	const SUN_ICON = '<svg class="icon" viewBox="0 0 512 512" aria-hidden="true"><path transform="matrix(1 0 0 -1 0 448)" d="M256 288c52.9004 0 96 -43.0996 96 -96s-43.0996 -96 -96 -96s-96 43.0996 -96 96s43.0996 96 96 96zM502.4 207.5c12.7998 -6.40039 12.7998 -24.5996 -0.200195 -31.0996l-94.7002 -47.3008l33.5 -100.399c4.59961 -13.5 -8.2998 -26.4004 -21.9004 -21.9004 l-100.399 33.5l-47.2998 -94.7002c-6.40039 -12.7998 -24.6006 -12.7998 -31 0l-47.3008 94.7002l-100.399 -33.5c-13.5 -4.59961 -26.4004 8.2998 -21.9004 21.9004l33.5 100.5l-94.7002 47.2998c-12.7998 6.40039 -12.7998 24.5996 0 31l94.7002 47.4004l-33.5 100.399 c-4.59961 13.5 8.2998 26.4004 21.9004 21.9004l100.5 -33.5l47.2998 94.7002c6.40039 12.7998 24.5996 12.7998 31 0l47.4004 -94.8008l100.399 33.5c13.5 4.60059 26.4004 -8.2998 21.9004 -21.8994l-33.5 -100.4zM346.5 101.5c49.9004 49.9004 49.9004 131.1 0 181 s-131.1 49.9004 -181 0s-49.9004 -131.1 0 -181s131.1 -49.9004 181 0z"/></svg>';
+	const MOON_ICON = '<svg class="icon" viewBox="0 0 512 512" aria-hidden="true"><path transform="matrix(1 0 0 -1 0 448)" d="M283.211 -64c-141.489 0 -256 114.691 -256 256c0 141.489 114.691 256 256 256c13.0176 -0.00195312 33.9727 -1.91895 46.7754 -4.28027c11.0059 -2.0332 13.4414 -16.7178 3.75586 -22.2295c-62.8359 -35.7588 -101.498 -102.172 -101.498 -174.395 c0 -125.378 114.059 -220.607 238.262 -196.954c10.9229 2.08008 18.6299 -10.6416 11.5625 -19.3496c-47.7783 -58.8672 -119.896 -94.792 -198.857 -94.792z"/></svg>';
+	const CHECK_ICON ='<svg class="icon" viewBox="0 0 512 512" aria-hidden="true"><path transform="matrix(1 0 0 -1 0 448)" d="M173.898 8.5957l-166.4 166.4c-9.99707 9.99707 -9.99707 26.2061 0 36.2041l36.2031 36.2041c9.99707 9.99805 26.207 9.99805 36.2041 0l112.095 -112.095l240.095 240.095c9.99707 9.99707 26.207 9.99707 36.2041 0l36.2031 -36.2041 c9.99707 -9.99707 9.99707 -26.2061 0 -36.2041l-294.4 -294.401c-9.99805 -9.99707 -26.207 -9.99707 -36.2031 0.000976562z"/></svg>';
 
 	const encoder = new TextEncoder();
 
@@ -96,6 +102,58 @@
 		}
 	}
 
+	const darkSystem = window.matchMedia('(prefers-color-scheme: dark)');
+
+	function currentTheme(){
+		return document.documentElement.dataset.theme || (darkSystem.matches ? 'dark' : 'light');
+	}
+
+	/**
+	 * Without a saved choice the page follows the system theme (see the CSS).
+	 */
+	function loadTheme(){
+		try {
+			const theme = localStorage.getItem(THEME_STORAGE_KEY);
+			if(theme === 'light' || theme === 'dark'){
+				document.documentElement.dataset.theme = theme;
+			}
+		} catch (err) {
+			// Storage can be unavailable: follow the system theme.
+		}
+	}
+
+	function saveTheme(theme){
+		// Switch every color at once instead of letting the buttons' hover transitions lag behind.
+		const root = document.documentElement;
+		root.classList.add('theme-switching');
+		root.dataset.theme = theme;
+		requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('theme-switching')));
+		try {
+			localStorage.setItem(THEME_STORAGE_KEY, theme);
+		} catch (err) {
+			// The choice still applies to this page.
+		}
+	}
+
+	function initThemeToggle(button){
+		// The button shows the theme it switches to.
+		const update = () => {
+			const next = currentTheme() === 'dark' ? 'light' : 'dark';
+			button.innerHTML = next === 'dark' ? MOON_ICON : SUN_ICON;
+			button.title = `Switch to ${next} theme`;
+			button.setAttribute('aria-label', button.title);
+		};
+		button.addEventListener('click', () => {
+			saveTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+			update();
+		});
+		darkSystem.addEventListener('change', update);
+		update();
+	}
+
+	// Runs from <head>, before the first paint, so a saved theme doesn't flash the other one.
+	loadTheme();
+
 	class PasswordManager {
 		constructor(root) {
 			this.root = root;
@@ -149,10 +207,7 @@
 		_setVersion(version){
 			this.version = version;
 			this.versionButtons.forEach(button => {
-				const active = button.dataset.version === version;
-				button.classList.toggle('btn-primary', active);
-				button.classList.toggle('btn-outline-primary', !active);
-				button.setAttribute('aria-pressed', String(active));
+				button.setAttribute('aria-pressed', String(button.dataset.version === version));
 			});
 			this.siteGroup.hidden = version === 'v1';
 			this.v1Warning.hidden = version !== 'v1';
@@ -247,11 +302,10 @@
 		}
 
 		_showCopySuccess(){
-			this.copyOutput.style.width = this.copyOutput.offsetWidth + 'px';
-			this.copyOutput.innerHTML = '<i class="fa fa-check"></i>';
+			this.copyOutput.innerHTML = CHECK_ICON + 'Copied';
 			clearTimeout(this.copyTimeout);
 			this.copyTimeout = setTimeout(() => {
-				this.copyOutput.textContent = 'Copy to clipboard';
+				this.copyOutput.textContent = 'Copy';
 			}, 1500);
 		}
 	}
@@ -271,5 +325,6 @@
 			new PasswordManager(container);
 		}
 		document.querySelectorAll('.contact').forEach(initContactLink);
+		document.querySelectorAll('.theme-toggle').forEach(initThemeToggle);
 	});
 })();

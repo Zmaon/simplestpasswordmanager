@@ -1,32 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>The simplest password manager</title>
 	<meta name="keywords" content="simple password manager, simplest password manager, password manager, password generator">
 	<meta name="description" content="A simple password manager that generates passwords based on a phrase easy to remember.">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" media="screen"
-		href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" media="screen" href="./css/fontawesome/css/all.css">
-	<link rel="stylesheet" type="text/css" media="screen" href="./css/main.css">
+	<link rel="stylesheet" href="./css/main.css">
 	<link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16.png">
+	<script src="./password_manager.js"></script>
 </head>
 
 <body>
-		<div class="header">
-				<div class="container mb-5">
-					<div class="row">
-						<div class="col-md-6">
-							<a href="/"><img src="images/tspm_logo.svg" alt="TSPM Logo"></a>
-						</div>
-					</div>
-				</div>
+	<header class="header">
+		<div class="wrap">
+			<a href="/"><img src="images/tspm_logo.svg" width="250" height="59" alt="TSPM Logo"></a>
+			<div class="header-links">
+				<button type="button" class="theme-toggle"></button>
 			</div>
-		<div class="container">
+		</div>
+	</header>
+	<main class="wrap">
+		<div class="panel legal">
 			<h1>Terms and Conditions ("Terms")</h1>
 
 
@@ -67,5 +64,6 @@
 
 			<p>By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the Service.</p>
 		</div>
-	</body>
+	</main>
+</body>
 </html>
