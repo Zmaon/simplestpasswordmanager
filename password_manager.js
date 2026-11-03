@@ -20,7 +20,7 @@
 	// Icons from Font Awesome Free, CC BY 4.0.
 	const SUN_ICON = '<svg class="icon" viewBox="0 0 512 512" aria-hidden="true"><path transform="matrix(1 0 0 -1 0 448)" d="M256 288c52.9004 0 96 -43.0996 96 -96s-43.0996 -96 -96 -96s-96 43.0996 -96 96s43.0996 96 96 96zM502.4 207.5c12.7998 -6.40039 12.7998 -24.5996 -0.200195 -31.0996l-94.7002 -47.3008l33.5 -100.399c4.59961 -13.5 -8.2998 -26.4004 -21.9004 -21.9004 l-100.399 33.5l-47.2998 -94.7002c-6.40039 -12.7998 -24.6006 -12.7998 -31 0l-47.3008 94.7002l-100.399 -33.5c-13.5 -4.59961 -26.4004 8.2998 -21.9004 21.9004l33.5 100.5l-94.7002 47.2998c-12.7998 6.40039 -12.7998 24.5996 0 31l94.7002 47.4004l-33.5 100.399 c-4.59961 13.5 8.2998 26.4004 21.9004 21.9004l100.5 -33.5l47.2998 94.7002c6.40039 12.7998 24.5996 12.7998 31 0l47.4004 -94.8008l100.399 33.5c13.5 4.60059 26.4004 -8.2998 21.9004 -21.8994l-33.5 -100.4zM346.5 101.5c49.9004 49.9004 49.9004 131.1 0 181 s-131.1 49.9004 -181 0s-49.9004 -131.1 0 -181s131.1 -49.9004 181 0z"/></svg>';
 	const MOON_ICON = '<svg class="icon" viewBox="0 0 512 512" aria-hidden="true"><path transform="matrix(1 0 0 -1 0 448)" d="M283.211 -64c-141.489 0 -256 114.691 -256 256c0 141.489 114.691 256 256 256c13.0176 -0.00195312 33.9727 -1.91895 46.7754 -4.28027c11.0059 -2.0332 13.4414 -16.7178 3.75586 -22.2295c-62.8359 -35.7588 -101.498 -102.172 -101.498 -174.395 c0 -125.378 114.059 -220.607 238.262 -196.954c10.9229 2.08008 18.6299 -10.6416 11.5625 -19.3496c-47.7783 -58.8672 -119.896 -94.792 -198.857 -94.792z"/></svg>';
-	const CHECK_ICON ='<svg class="icon" viewBox="0 0 512 512" aria-hidden="true"><path transform="matrix(1 0 0 -1 0 448)" d="M173.898 8.5957l-166.4 166.4c-9.99707 9.99707 -9.99707 26.2061 0 36.2041l36.2031 36.2041c9.99707 9.99805 26.207 9.99805 36.2041 0l112.095 -112.095l240.095 240.095c9.99707 9.99707 26.207 9.99707 36.2041 0l36.2031 -36.2041 c9.99707 -9.99707 9.99707 -26.2061 0 -36.2041l-294.4 -294.401c-9.99805 -9.99707 -26.207 -9.99707 -36.2031 0.000976562z"/></svg>';
+	const CHECK_ICON = '<svg class="icon" viewBox="0 0 512 512" aria-hidden="true"><path transform="matrix(1 0 0 -1 0 448)" d="M173.898 8.5957l-166.4 166.4c-9.99707 9.99707 -9.99707 26.2061 0 36.2041l36.2031 36.2041c9.99707 9.99805 26.207 9.99805 36.2041 0l112.095 -112.095l240.095 240.095c9.99707 9.99707 26.207 9.99707 36.2041 0l36.2031 -36.2041 c9.99707 -9.99707 9.99707 -26.2061 0 -36.2041l-294.4 -294.401c-9.99805 -9.99707 -26.207 -9.99707 -36.2031 0.000976562z"/></svg>';
 
 	const encoder = new TextEncoder();
 
@@ -80,6 +80,37 @@
 			[chars[i], chars[j]] = [chars[j], chars[i]];
 		}
 		return chars.join('');
+	}
+
+	const STRENGTH_LABELS = [
+		'',
+		'Very weak: this would be easy to guess.',
+		'Weak: use a sentence of at least 4 words.',
+		'Good. A longer sentence would be even stronger.',
+		'Strong.'
+	];
+
+	/**
+	 * A rough estimate, mostly to push people towards long sentences.
+	 * Returns 0 for an empty passphrase, then 1 (very weak) to 4 (strong).
+	 */
+	function passphraseStrength(passphrase){
+		if(!passphrase){
+			return 0;
+		}
+		const length = [...passphrase].length;
+		const words = passphrase.trim().split(/\s+/).length;
+		const distinctChars = new Set(passphrase.toLowerCase()).size;
+		if(length < 12 || distinctChars < 6){
+			return 1;
+		}
+		if(length < 20 || words < 4){
+			return 2;
+		}
+		if(length < 30 || words < 5){
+			return 3;
+		}
+		return 4;
 	}
 
 	function loadVersion(){
@@ -159,6 +190,9 @@
 			this.root = root;
 			this.passphrase = root.querySelector('#passphrase');
 			this.passphraseLabel = root.querySelector('label[for="passphrase"]');
+			this.passphraseHelp = root.querySelector('.passphrase-help');
+			this.strength = root.querySelector('.strength');
+			this.strengthLabel = root.querySelector('.strength-label');
 			this.site = root.querySelector('#site');
 			this.siteGroup = root.querySelector('.site-group');
 			this.output = root.querySelector('#password-output');
@@ -175,9 +209,13 @@
 		_init() {
 			let timeout = null;
 			const scheduleGenerate = () => {
+				// Clear the old password right away, so it can't be copied while it no longer matches the inputs.
+				this.generation++;
+				this.output.value = '';
 				clearTimeout(timeout);
 				timeout = setTimeout(() => this._generate(), 350);
 			};
+			this.passphrase.addEventListener('input', () => this._updateStrength());
 			this.passphrase.addEventListener('input', scheduleGenerate);
 			this.site.addEventListener('input', scheduleGenerate);
 
@@ -200,6 +238,7 @@
 				});
 			});
 
+			this._updateStrength();
 			this._setVersion(loadVersion());
 			this.passphrase.focus();
 		}
@@ -210,9 +249,17 @@
 				button.setAttribute('aria-pressed', String(button.dataset.version === version));
 			});
 			this.siteGroup.hidden = version === 'v1';
+			// In v1 the passphrase itself changed from site to site.
+			this.passphraseHelp.hidden = version === 'v1';
 			this.v1Warning.hidden = version !== 'v1';
 			this.passphraseLabel.textContent = version === 'v1' ? 'Passphrase' : 'Master passphrase';
 			this._generate();
+		}
+
+		_updateStrength(){
+			const strength = passphraseStrength(this.passphrase.value);
+			this.strength.dataset.strength = String(strength);
+			this.strengthLabel.textContent = STRENGTH_LABELS[strength];
 		}
 
 		_toggleShowText(input, button){

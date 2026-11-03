@@ -3,21 +3,23 @@ RewriteEngine On
 RewriteCond %{REQUEST_URI} ^/.well-known/
 RewriteRule .* - [L]
 
-RewriteCond %{HTTP_HOST} !^www\.tspm\.ch
-RewriteRule ^(.*)$ https://www.tspm.ch/$1 [R=301,L]
+# Hidden files and folders (.git, .htaccess…) are never served.
+RewriteRule (^|/)\. - [F]
 
-RewriteCond %{HTTP_HOST} !^www\.
-RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
-
+# Everything goes to https://www.tspm.ch, whatever host the request came in with.
+RewriteCond %{HTTP_HOST} !^www\.tspm\.ch(:\d+)?$ [NC,OR]
 RewriteCond %{HTTPS} off
-RewriteRule (.*) https://%{SERVER_NAME}/$1 [R=301,L]
+RewriteRule ^(.*)$ https://www.tspm.ch/$1 [R=301,L]
 
 <IfModule mod_headers.c>
 	# Browsers only accept HSTS over HTTPS, the redirects above take care of plain HTTP.
 	Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
-	# Only our own files may load, and the page may not open any network connection
-	# (connect-src 'none'), so an injected script can't send passphrases anywhere.
+	# Only our own files may load, and the page can't fetch, send beacons or load anything from
+	# other sites. It's a safety net, not a guarantee: a script could still leak data by navigating
+	# away, and none of this helps if this server itself is compromised.
 	Header always set Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; frame-ancestors 'none'"
+	Header always set X-Frame-Options "DENY"
+	Header always set Cross-Origin-Opener-Policy "same-origin"
 	Header always set X-Content-Type-Options "nosniff"
 	Header always set Referrer-Policy "no-referrer"
 </IfModule>

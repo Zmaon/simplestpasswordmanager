@@ -8,7 +8,7 @@ The idea is to keep the project as simple as possible, so no server side scripti
 
 Clone the repo and double-click on `index.html` to open it with your favorite browser, that's it!
 
-When hosted, `.htaccess` adds a Content Security Policy that only allows the site's own files and forbids any network connection from the page, plus HSTS. It needs Apache's `mod_headers`.
+When hosted, `.htaccess` adds HSTS and a Content Security Policy that only allows the site's own files and blocks requests from the page to other sites (fetch, XHR, images). It's a safety net, not a guarantee: it can't stop a script from navigating away with data, and it doesn't help if the server itself is compromised. It needs Apache's `mod_headers`; check the headers with `curl -I https://www.tspm.ch` after deploying.
 
 ## How passwords are generated
 
